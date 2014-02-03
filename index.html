@@ -112,12 +112,15 @@
 	<script src="javascript/jquery.scroller.js" type="text/javascript"></script>
 
 	<script type="text/javascript">
-		(function($){
-			$('.inner-wrapper > div:not(.three-col)').html($('.three-col').html()); // Save having to repeat code
-			$(function(){
-				$('.scroller').scroller();
+		;(function($, window, document){
+			$(document).ready(function(){
+				$('.inner-wrapper > div:not(.three-col)').html($('.three-col').html()); // Save having to repeat code
+
+				$('.scroller').each(function(){
+					new App.Scroller(this);
+				});
 			});
-		})(jQuery);
+		})(jQuery, window, document);
 	</script>
 </body>
 </html>

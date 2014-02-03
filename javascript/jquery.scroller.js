@@ -4,78 +4,159 @@
 // Dependencies for swipe events
 // jQuery.event.swipe
 
-;(function($, doc, win) {
-	"use strict";
+var App = {};
 
-	function Widget(el, opts){
-		this.$el  = $(el);
+;(function($, window, document){
+	'use strict';
 
-		this.opts = opts;
+	var Scroller = this.Scroller = function(element, options){
+		this.element = $(element);
+		this.options = $.extend({}, this.options, options);
 
-		this.$container =  this.$el.find('.thumbs');
-
-		this.$thumbsList = this.$el.find('.thumbs ul');
-
-		this.$thumbs = this.$el.find('.thumbs li');
-
-		this.$current = 1;
-
-		this.init();
-	}
-
-	Widget.prototype.init = function(){
-		var self = this;
-		
-		this.$thumbsList.css('width', this.$thumbs.length*this.$thumbs.outerWidth());
-
-		this.$el.find('.next').on('click keypress', function(){
-			if(!self.$thumbsList.is(':animated')) self.next();
-		});
-
-		this.$el.find('.previous').on('click keypress', function(){
-			if(!self.$thumbsList.is(':animated')) self.previous();
-		});
-
-		this.$container.on('swipeleft', function(){
-			self.$el.find('.next').trigger('click');
-		});
-
-		this.$container.on('swiperight', function(){
-			self.$el.find('.previous').trigger('click');
-		});
+		this.initialise();
 	};
 
-	Widget.prototype.next = function(){
-		var containerWidth = this.$container.outerWidth()+parseInt(this.$thumbs.css('padding-right'), 10),
-			visibleThumbs = parseInt(containerWidth/this.$thumbs.outerWidth(), 10),
-			visible = Math.ceil(this.$thumbs.length/visibleThumbs);
+	Scroller.prototype = {
+		options: {
+			next: 'next',
+			previous: 'previous',
+			thumbs: {
+				evenFit: true,
+				equalHeight: true
+			},
+			scrollAll: false
+		},
 
-		if((this.$current < visible && this.$current != visible)){
-			this.$current++;
-			this.$thumbsList.animate({marginLeft: parseInt(this.$thumbsList.css('margin-left'), 10)-visibleThumbs*this.$thumbs.outerWidth()}, 500);
-			this.$el.find('.previous').removeClass('disabled');
+		initialise: function(){
+			this.current = 1;
+
+			this.setElements();
+			this.setUp();
+
+			if(this.options.thumbs.evenFit){
+				this.setThumbWidth();
+			}
+
+			if(this.options.thumbs.equalHeight){
+				this.setThumbHeight();
+			}
+
+			this.setEvents();
+			this.resize();
+		},
+
+		setElements: function(){
+			this.$container =  this.element.find('.thumbs');
+			this.$thumbsList = this.element.find('.thumbs ul');
+			this.$thumbs = this.element.find('.thumbs li');
+			this.$images = this.$thumbs.find('img');
+		},
+
+		setEvents: function(){
+			var self = this;
+
+			this.element.find('.' + this.options.next).on('click keypress', function(){
+				if(!self.$thumbsList.is(':animated')) self.next();
+			});
+
+			this.element.find('.' + this.options.previous).on('click keypress', function(){
+				if(!self.$thumbsList.is(':animated')) self.previous();
+			});
+
+			this.$container.on('swipeleft', function(){
+				self.element.find('.' + self.options.next).trigger('click');
+			});
+
+			this.$container.on('swiperight', function(){
+				self.element.find('.' + self.options.previous).trigger('click');
+			});
+		},
+
+		setUp: function(){
+			this.thumbPadding = {
+				right: parseInt(this.$thumbs.css('padding-right'), 10)
+			};
+			this.containerWidth = this.$container.outerWidth() + this.thumbPadding.right;
+			this.thumbsWidth = this.$thumbs.outerWidth();
+			this.thumbsFit = parseInt(this.containerWidth / this.thumbsWidth, 10);
+			this.scrollNumber = (this.options.scrollAll) ? this.thumbsFit : 1;
+		},
+
+		setThumbWidth: function(){
+			var width = Math.floor(this.containerWidth / this.thumbsFit) + 'px';
+
+			this.$thumbs.css('width', width);
+
+			this.setUp();
+		},
+
+		setThumbHeight: function(){
+			var self = this;
+
+			this.$images.load(function(){
+				self.equalHeight(self.$thumbs);
+				self.$thumbs.find('a').css('height', 'auto');
+				self.$thumbs.find('a').css('height', self.highest);
+			});
+		},
+
+		equalHeight: function(element){
+			var self = this;
+
+			this.highest = 0;
+
+			element.each(function() {
+				var height = $(this).height();
+
+				if(height > self.highest){
+					self.highest = height;
+				}
+			});
+		},
+
+		next: function(){
+			var visible = Math.ceil(this.$thumbs.length / this.scrollNumber);
+
+			if((this.current < visible && this.current != visible)){
+				this.nextPrevious(this.options.previous);
+				this.current++;
+			}
+
+			if(this.current == visible) this.element.find('.' + this.options.next).addClass('disabled');
+		},
+
+		previous: function(){
+			if(this.current > 1){
+				this.nextPrevious(this.options.next);
+				this.current--;
+			}
+
+			if(this.current === 1) this.element.find('.' + this.options.previous).addClass('disabled');
+		},
+
+		nextPrevious: function(direction){
+			var modifier = (direction == this.options.next) ? 1 : -1,
+				scrollWidth = this.scrollNumber * this.thumbsWidth;
+
+			this.$thumbsList.animate({
+				marginLeft: (-1 * (this.current-1) * scrollWidth) + (modifier * scrollWidth)
+			}, 500);
+
+			this.element.find('.' + direction).removeClass('disabled');
+		},
+
+		resize: function(){
+			var self = this;
+
+			$(window).on('resize', function(){
+				self.setUp();
+			});
 		}
-
-		if(this.$current == visible) this.$el.find('.next').addClass('disabled');
 	};
 
-	Widget.prototype.previous = function(){
-		var containerWidth = this.$container.outerWidth()+parseInt(this.$thumbs.css('padding-right'), 10),
-			visibleThumbs = parseInt(containerWidth/this.$thumbs.outerWidth(), 10);
-
-		if(this.$current > 1){
-			this.$current--;
-			this.$thumbsList.animate({marginLeft: parseInt(this.$thumbsList.css('margin-left'), 10)+visibleThumbs*this.$thumbs.outerWidth()}, 500);
-			this.$el.find('.next').removeClass('disabled');
-		}
-
-		if(this.$current === 1) this.$el.find('.previous').addClass('disabled');
+	$.fn.scroller = function(options){
+		new Scroller(this, options);
+		return this;
 	};
 
-	$.fn.scroller = function(opts){
-		return this.each(function(){
-			new Widget(this, opts);
-		});
-	};
-
-})(jQuery, document, window);
+}).apply(App, [jQuery, window, document]);

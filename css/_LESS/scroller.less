@@ -19,7 +19,7 @@
 }
 
 .scroller {
-  	h2 {
+	h2 {
 		border-bottom: 1px solid @color2;
 		font-size: 1.6em;
 		font-weight: bold;
@@ -46,7 +46,8 @@
 			border: 1px solid @color3;
 			color: @color1;
 			display: block;
-			padding: 8px 10px;
+			padding: 8px 10px 36px 10px;
+			position: relative;
 
 			&:after {
 				.clear-fix
@@ -64,6 +65,7 @@
 		display: block;
 		margin: 0 0 4px;
 		padding: 1px;
+		width: 100%;
 	}
 
 	p {
@@ -71,12 +73,14 @@
 	}
 
 	.more {
+		bottom: 8px;
 		clear: both;
 		display: block;
 		font-size: 1.2em;
 		line-height: 1.33334;
-		padding: 8px 0 0;
+		right: 8px;
 		text-align: right;
+		position: absolute;
 		text-decoration: underline;
 
 		&:after {
@@ -106,9 +110,9 @@
 			display: inline-block;
 			line-height: 1.4545;
 			padding-right: 20px;
-			white-space: normal;
-			width: 220px;
 			vertical-align: top;
+			white-space: normal;
+			width: 230px;
 		}
 		a {
 			>*:not(.more) {
@@ -122,7 +126,7 @@
 		}
 	}
 
-	 .controls {
+	.controls {
 		float: right;
 		margin: -44px 0 0;
 

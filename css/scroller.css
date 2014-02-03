@@ -1,1 +1,158 @@
-.clear-fix{clear:both;content:'';display:table}.scroller h2{border-bottom:1px solid #ccc;font-size:1.6em;font-weight:bold;line-height:1.3334;margin-bottom:17px;padding:0 32px 6px 0}.scroller h3{margin:0 0 8px}.scroller ul{margin:0}.scroller li{background:0;margin:0;padding:0}.scroller li a{background:#eee;border:1px solid #ddd;color:#000;display:block;padding:8px 10px}.scroller li a:after{clear:both;content:'';display:table}.scroller li a:hover,.scroller li a:focus{text-decoration:none}.scroller img{border:1px solid #ddd;display:block;margin:0 0 4px;padding:1px}.scroller p{margin:0}.scroller .more{clear:both;display:block;font-size:1.2em;line-height:1.33334;padding:8px 0 0;text-align:right;text-decoration:underline}.scroller .more:after{border-bottom:5px solid transparent;border-left:5px solid #000;border-top:5px solid transparent;content:'';float:right;height:0;margin:4px 0 0 4px;width:0}.scroller .more:hover{text-decoration:none}.scroller .thumbs{overflow:hidden}.scroller .thumbs ul{white-space:nowrap}.scroller .thumbs li{display:inline-block;line-height:1.4545;padding-right:20px;white-space:normal;width:220px;vertical-align:top}.scroller .thumbs a>*:not(.more){opacity:1;-webkit-transition:opacity .3s ease-in-out;-moz-transition:opacity .3s ease-in-out;-o-transition:opacity .3s ease-in-out;-ms-transition:opacity .3s ease-in-out;transition:opacity .3s ease-in-out}.scroller .thumbs a:hover>*:not(.more){opacity:.5}.scroller .controls{float:right;margin:-44px 0 0}.scroller .controls li{border-bottom:8px solid transparent;border-right:8px solid #000;border-top:8px solid transparent;cursor:pointer;float:left;height:0;text-indent:-1000em;width:0}.scroller .controls li.next{border-right:0;border-left:8px solid #000;margin-left:6px}.scroller .controls li.disabled{border-left-color:#ccc;border-right-color:#ccc;cursor:default}@media(max-width:768px){.inner-wrapper>div .scroller .thumbs li{width:166px}}@media(max-width:580px){.inner-wrapper>div{margin-right:0;width:100%}.inner-wrapper>div .scroller .thumbs li{width:166px}}.jsDisabled .scroller h2{padding-right:0}.jsDisabled .scroller ul{margin:0 0 8px}.jsDisabled .scroller .controls{display:none}.jsDisabled .scroller .thumbs{overflow-x:auto}.ie7 .scroller li a{min-height:0}.ie7 .thumbs li{float:left}
+/* Constants */
+/* Mixins */
+.clear-fix {
+  clear: both;
+  content: '';
+  display: table;
+}
+.scroller h2 {
+  border-bottom: 1px solid #cccccc;
+  font-size: 1.6em;
+  font-weight: bold;
+  line-height: 1.3334;
+  margin-bottom: 17px;
+  padding: 0 32px 6px 0;
+}
+.scroller h3 {
+  margin: 0 0 8px;
+}
+.scroller ul {
+  margin: 0;
+}
+.scroller li {
+  background: 0;
+  margin: 0;
+  padding: 0;
+}
+.scroller li a {
+  background: #eeeeee;
+  border: 1px solid #dddddd;
+  color: #000000;
+  display: block;
+  padding: 8px 10px 36px 10px;
+  position: relative;
+}
+.scroller li a:after {
+  clear: both;
+  content: '';
+  display: table;
+}
+.scroller li a:hover,
+.scroller li a:focus {
+  text-decoration: none;
+}
+.scroller img {
+  border: 1px solid #dddddd;
+  display: block;
+  margin: 0 0 4px;
+  padding: 1px;
+  width: 100%;
+}
+.scroller p {
+  margin: 0;
+}
+.scroller .more {
+  bottom: 8px;
+  clear: both;
+  display: block;
+  font-size: 1.2em;
+  line-height: 1.33334;
+  right: 8px;
+  text-align: right;
+  position: absolute;
+  text-decoration: underline;
+}
+.scroller .more:after {
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #000000;
+  border-top: 5px solid transparent;
+  content: '';
+  float: right;
+  height: 0;
+  margin: 4px 0 0 4px;
+  width: 0;
+}
+.scroller .more:hover {
+  text-decoration: none;
+}
+.scroller .thumbs {
+  overflow: hidden;
+}
+.scroller .thumbs ul {
+  white-space: nowrap;
+}
+.scroller .thumbs li {
+  display: inline-block;
+  line-height: 1.4545;
+  padding-right: 20px;
+  vertical-align: top;
+  white-space: normal;
+  width: 230px;
+}
+.scroller .thumbs a > *:not(.more) {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s ease-in-out;
+  -o-transition: opacity 0.3s ease-in-out;
+  -ms-transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+}
+.scroller .thumbs a:hover > *:not(.more) {
+  opacity: .5;
+}
+.scroller .controls {
+  float: right;
+  margin: -44px 0 0;
+}
+.scroller .controls li {
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid #000000;
+  border-top: 8px solid transparent;
+  cursor: pointer;
+  float: left;
+  height: 0;
+  text-indent: -1000em;
+  width: 0;
+}
+.scroller .controls li.next {
+  border-right: 0;
+  border-left: 8px solid #000000;
+  margin-left: 6px;
+}
+.scroller .controls li.disabled {
+  border-left-color: #cccccc;
+  border-right-color: #cccccc;
+  cursor: default;
+}
+@media (max-width: 768px) {
+  .inner-wrapper > div .scroller .thumbs li {
+    width: 166px;
+  }
+}
+@media (max-width: 580px) {
+  .inner-wrapper > div {
+    margin-right: 0;
+    width: 100%;
+  }
+  .inner-wrapper > div .scroller .thumbs li {
+    width: 166px;
+  }
+}
+.jsDisabled .scroller h2 {
+  padding-right: 0;
+}
+.jsDisabled .scroller ul {
+  margin: 0 0 8px;
+}
+.jsDisabled .scroller .controls {
+  display: none;
+}
+.jsDisabled .scroller .thumbs {
+  overflow-x: auto;
+}
+.ie7 .scroller li a {
+  min-height: 0;
+}
+.ie7 .thumbs li {
+  float: left;
+}
