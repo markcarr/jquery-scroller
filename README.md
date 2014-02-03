@@ -1,9 +1,9 @@
 jquery-scroller
 ===============
 
-jQuery based scroller with swipe support.
+jQuery based responsive scroller with swipe support.
 
-Online demo: http://mark-carr.co.uk/demos/jQuery/scroller/index.html
+Demo: https://rawgithub.com/markcarr/jquery-scroller/master/index.html
 
-Initiate:
-$('.foo').scroller();
+Initiate:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;new App.Scroller($('.foo'));
